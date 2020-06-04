@@ -7,3 +7,19 @@ body {
 .dib {
   background-color: rgba(255, 255, 255, 0.219);
 }
+
+@media only screen and (max-width: 600px) {
+  #responsive {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  #logo {
+    font-size: 1.7em;
+  }
+
+  #search {
+    width: 8em;
+  }
+}

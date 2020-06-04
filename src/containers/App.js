@@ -1,6 +1,7 @@
 import React from "react";
-import Header from "./Header";
-import Cardlist from "./Cardlist";
+import Header from "../components/Header";
+import Cardlist from "../components/Cardlist";
+import Scroll from "../components/Scroll";
 
 class App extends React.Component {
   constructor() {
@@ -24,22 +25,21 @@ class App extends React.Component {
   }
 
   render() {
-    const filteredStates = this.state.stats.filter((stat) => {
-      return stat.state
-        .toLowerCase()
-        .includes(this.state.searchField.toLowerCase());
+    const { stats, searchField } = this.state;
+    const filteredStates = stats.filter((stat) => {
+      return stat.state.toLowerCase().includes(searchField.toLowerCase());
     });
 
-    if (this.state.stats.length === 0) {
-      return <h1 className="white tc">Loading...</h1>
-    } else {
-      return (
-        <div>
-          <Header searchChange={this.onSearchChange} />
+    return !stats.length ? (
+      <h1 className="white tc">Loading...</h1>
+    ) : (
+      <div>
+        <Header searchChange={this.onSearchChange} />
+        <Scroll>
           <Cardlist stats={filteredStates} />
-        </div>
-      );
-    }
+        </Scroll>
+      </div>
+    );
   }
 }
 
