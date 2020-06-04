@@ -1,0 +1,9 @@
+body {
+  background: linear-gradient(to right, rgb(255, 162, 0), rgb(253, 240, 104));
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.dib {
+  background-color: rgba(255, 255, 255, 0.219);
+}
