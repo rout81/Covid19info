@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Cardlist from "../components/Cardlist";
 import Scroll from "../components/Scroll";
+import ErrorBoundry from "../components/ErrorBoundry";
 
 class App extends React.Component {
   constructor() {
@@ -36,7 +37,9 @@ class App extends React.Component {
       <div>
         <Header searchChange={this.onSearchChange} />
         <Scroll>
-          <Cardlist stats={filteredStates} />
+          <ErrorBoundry>
+            <Cardlist stats={filteredStates} />
+          </ErrorBoundry>
         </Scroll>
       </div>
     );
