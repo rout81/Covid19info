@@ -3,19 +3,26 @@ import Header from "../components/Header";
 import Cardlist from "../components/Cardlist";
 import Scroll from "../components/Scroll";
 import ErrorBoundry from "../components/ErrorBoundry";
+import { setSearchField } from "../redux/actions";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return { searchField: state.searchField };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+  };
+};
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       stats: [],
-      searchField: "",
     };
   }
-
-  onSearchChange = (event) => {
-    this.setState({ searchField: event.target.value });
-  };
 
   componentDidMount() {
     fetch(`https://api.covid19india.org/data.json`)
@@ -26,7 +33,8 @@ class App extends React.Component {
   }
 
   render() {
-    const { stats, searchField } = this.state;
+    const { stats } = this.state;
+    const { searchField, onSearchChange } = this.props;
     const filteredStates = stats.filter((stat) => {
       return stat.state.toLowerCase().includes(searchField.toLowerCase());
     });
@@ -35,7 +43,7 @@ class App extends React.Component {
       <h1 className="white tc">Loading...</h1>
     ) : (
       <div>
-        <Header searchChange={this.onSearchChange} />
+        <Header searchChange={onSearchChange} />
         <Scroll>
           <ErrorBoundry>
             <Cardlist stats={filteredStates} />
@@ -46,4 +54,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
